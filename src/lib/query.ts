@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://viajoenbici.local/graphql";
+const API_BASE_URL = "http://viajoenbici.local/graphql";
 
 const fetchPosts = async () => {
     const response = await fetch(API_BASE_URL, {
