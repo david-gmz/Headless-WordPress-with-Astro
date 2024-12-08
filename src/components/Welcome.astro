@@ -1,7 +1,7 @@
 ---
 export const prerender = false;
 import { Image } from "astro:assets";
-import { posts } from "@lib/query";
+import { posts } from "@lib/allPostsQuery";
 interface PostType {
     slug: string;
     date: string;
@@ -14,8 +14,6 @@ interface PostType {
     };
 }
 ---
-
-{console.log("Posts:", posts)}
 <div class="bg-slate-200 rounded-lg py-12">
     <h1 class="text-center text-3xl">Our Articles</h1>
 </div>
