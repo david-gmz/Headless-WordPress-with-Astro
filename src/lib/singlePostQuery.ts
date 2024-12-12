@@ -1,10 +1,7 @@
-import { API_BASE_URL } from "./apiUrl";
+import { wpQuery } from "./wpQuery";
 
 export const fetchSinglePost = async (slug: string) => {
-    const singleResponse = await fetch(API_BASE_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+    const singleResponse = await wpQuery({
             query: `
         query SinglePost($id: ID = "${slug}") {
           post(idType: SLUG, id: $id) {
@@ -14,17 +11,14 @@ export const fetchSinglePost = async (slug: string) => {
             featuredImage {
               node {
                 sourceUrl
+                altText
               }
             }
           }
         }
         `
         })
-    });
-
-    // destructure data from our JSON
-    const { data } = await singleResponse.json();
 
     //  assign the post info to singlePost variable for usability
-    return data.post;
+    return singleResponse.post;
 };

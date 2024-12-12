@@ -1,15 +1,12 @@
 ---
-import { API_BASE_URL } from "@lib/apiUrl";
 import { fetchSinglePost } from "@lib/singlePostQuery";
 import Layout from "@layouts/Layout.astro";
 import { Image } from "astro:assets";
+import { wpQuery } from "@lib/wpQuery";
 
 export async function getStaticPaths() {
-    const response = await fetch(API_BASE_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            query: `
+    const response = await wpQuery({
+        query: `
         query AllSlugs {
           posts {
             nodes {
@@ -18,11 +15,8 @@ export async function getStaticPaths() {
           }
         }
         `
-        })
     });
-
-    const { data } = await response.json();
-    const posts = data.posts.nodes;
+    const posts = response.posts.nodes;
     const paths = posts.map((post: string) => {
         return { params: post };
     });
@@ -47,18 +41,27 @@ const singlePost = await fetchSinglePost(slug);
                 }
             </p>
         </div>
-        <h1 class="text-center text-3xl text-bold mb-10">{singlePost.title}</h1>
+        <h1
+            class="text-center text-3xl text-bold mb-10"
+            transition:name={`title-${slug}`}
+            set:html={singlePost.title}
+        />
         {
             singlePost.featuredImage && (
                 <Image
                     class="w-full object-cover aspect-2/3 mb-5"
-                    alt=""
+                    alt={
+                        singlePost.featuredImage.node.altText
+                            ? singlePost.featuredImage.node.altText
+                            : singlePost.title
+                    }
                     src={singlePost.featuredImage.node.sourceUrl}
                     width={1500}
                     height={1000}
+                    transition:name={`img-${slug}`}
                 />
             )
         }
-        <div set:html={singlePost.content} />
+        <div class="prose" set:html={singlePost.content} />
     </article>
 </Layout>

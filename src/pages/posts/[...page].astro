@@ -1,0 +1,107 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { wpQuery } from "@lib/wpQuery";
+import type { PaginateFn, WPPost } from "@lib/wpQuery";
+import { Image } from "astro:assets";
+import type { Page } from "astro";
+
+export const prerender = true;
+export async function getStaticPaths({
+    paginate
+}: {
+    paginate: PaginateFn<WPPost>;
+}) {
+    const data = await wpQuery({
+        query: `
+        query AllPosts {
+          posts(where: {orderby: {field: DATE, order: DESC}}) {
+            nodes {
+              slug
+              date
+              title
+              excerpt
+              featuredImage {
+                node {
+                  sourceUrl,
+                  altText
+                }
+              }
+            }
+          }
+        }
+        `
+    });
+    const posts = data.posts.nodes;
+
+    return paginate(posts, { pageSize: 3 });
+}
+const { page } = Astro.props as { page: Page<WPPost> };
+
+const posts = page.data;
+---
+
+<Layout>
+    <div class="bg-slate-200 rounded-lg py-12">
+        <h1 class="text-center text-3xl">Our Articles</h1>
+    </div>
+
+    <div class="flex flex-wrap pt-5 -mx-2.5">
+        {
+            posts.map((post: WPPost) => (
+                <div class="lg:w-1/3 px-2.5 mb-5">
+                    <article class="rounded-lg bg-white shadow-lg p-5 h-full flex flex-col items-start justify-between">
+                        <div>
+                            {post.featuredImage && (
+                                <Image
+                                    class="w-full object-cover aspect-2/3 mb-5"
+                                    alt=""
+                                    src={post.featuredImage.node.sourceUrl}
+                                    width={600}
+                                    height={400}
+                                />
+                            )}
+                            <h2 class="text-xl font-bold mb-5">{post.title}</h2>
+                            <p class="mb-6">
+                                {post.excerpt.replace(/<(.|\n)*?>/g, "")}
+                            </p>
+                        </div>
+                        <a
+                            class="inline-block bg-slate-600 text-white rounded-md px-6 py-3 hover:bg-slate-500"
+                            href={`/blog/${post.slug}`}>
+                            Read More
+                        </a>
+                    </article>
+                </div>
+            ))
+        }
+    </div>
+
+    <div class="flex gap-6 justify-center items-center py-12">
+        {
+            page.url.prev ? (
+                <a
+                    class="p-3 rounded-md bg-slate-500 text-white"
+                    href={page.url.prev}>
+                    Previous
+                </a>
+            ) : (
+                <span class="text-gray-500 p-3 rounded-md block bg-gray-300">
+                    Previous
+                </span>
+            )
+        }
+        {
+            page.url.next ? (
+                <a
+                    class="p-3 rounded-md bg-slate-500 text-white"
+                    href={page.url.next}>
+                    Next
+                </a>
+            ) : (
+                <span class="text-gray-500 p-3 rounded-md block bg-gray-300">
+                    Next
+                </span>
+            )
+        }
+    </div>
+</Layout>

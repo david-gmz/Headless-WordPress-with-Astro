@@ -1,13 +1,10 @@
-import { API_BASE_URL } from "./apiUrl";
+import { wpQuery } from "./wpQuery";
 
-const fetchPosts = async () => {
-    const response = await fetch(API_BASE_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            query: `
-        query HomePageQuery {
-          posts(where: {orderby: {field: DATE, order: DESC}}) {
+export const allPostsQuery = async () => {
+    const data = await wpQuery({
+        query: `
+        query AllPosts {
+          posts {
             nodes {
               slug
               date
@@ -15,18 +12,14 @@ const fetchPosts = async () => {
               excerpt
               featuredImage {
                 node {
-                  sourceUrl
+                  sourceUrl,
+                  altText
                 }
               }
             }
           }
         }
-      `
-        })
+        `
     });
-
-    const { data } = await response.json();
     return data.posts.nodes;
 };
-
-export const posts = await fetchPosts();
