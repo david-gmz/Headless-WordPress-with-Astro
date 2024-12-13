@@ -5,16 +5,16 @@ export default defineConfig({
     // ...
     integrations: [tailwind()],
     output: "server",
-    site: "http://viajoenbici.local/", // important for pagination
-    pages: {
-        // Optional: customize pagination routes
-        pagination: {
-            routes: {
-                first: "/", // first page
-                page: "/page/:page" // subsequent pages
-            }
-        }
-    },
+    // site: "http://viajoenbici.local/", // important for pagination
+    // pages: {
+    //     // Optional: customize pagination routes
+    //     pagination: {
+    //         routes: {
+    //             first: "/", // first page
+    //             page: "/page/:page" // subsequent pages
+    //         }
+    //     }
+    // },
     image: {
         domains: ["astro.build", "http://viajoenbici.local/"],
         remotePatterns: [{ protocol: "http" }]
