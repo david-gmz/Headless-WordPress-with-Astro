@@ -1,0 +1,49 @@
+---
+import PostCard from "@components/PostCard.astro";
+import Layout from "@layouts/Layout.astro";
+import { wpQuery } from "@lib/wpQuery";
+import { postByTagQuery } from "@lib/postByTagQuery";
+
+export async function getStaticPaths() {
+    const response = await wpQuery({
+        query: `
+        query AllTags {
+          tags {
+            nodes {
+              name
+              slug
+            }
+          }
+        }
+      `
+    });
+
+    //  assign the array of nodes to "posts" variable for usability
+    const tags = response.tags.nodes;
+
+    // transform our array of tag objects into an array of {params: {tag: "tag-slug"}}
+    type TagType = { tag: { slug: string; name: string } };
+    const paths = tags.map((tag: TagType) => {
+        return {
+            params: { tag: tag.slug },
+            props: { tagName: tag.name }
+        };
+    });
+
+    return paths;
+}
+
+const { tag } = Astro.params;
+const { tagName } = Astro.props;
+
+const posts = await postByTagQuery(tag)
+---
+
+<Layout>
+    <div class="bg-slate-200 rounded-lg py-12">
+        <h1 class="text-center text-3xl">{tagName}</h1>
+    </div>
+    <div class="flex flex-wrap pt-5 -mx-2.5">
+        {posts.map((post: string) => <PostCard post={post} />)}
+    </div>
+</Layout>

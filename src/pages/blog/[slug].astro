@@ -17,9 +17,7 @@ export async function getStaticPaths() {
         `
     });
     const posts = response.posts.nodes;
-    const paths = posts.map((post: string) => {
-        return { params: post };
-    });
+    const paths = posts.map((post: string) => ({ params: post }));
 
     return paths;
 }
