@@ -1,6 +1,6 @@
 import { wpQuery } from "./wpQuery";
 
-export const postByTagQuery = async tag => {
+export const postByTagQuery = async (tag:any) => {
     const data = await wpQuery({
         query: `
         query SingleTag($id: ID = "${tag}") {

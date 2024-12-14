@@ -1,32 +1,18 @@
 ---
 import PostCard from "@components/PostCard.astro";
 import Layout from "@layouts/Layout.astro";
-import { wpQuery } from "@lib/wpQuery";
+import { getAllTags } from "@lib/getAllTags";
 import { postByTagQuery } from "@lib/postByTagQuery";
-
+export const prerender = true;
+interface TagType {
+    tag: { slug: string; name: string };
+}
 export async function getStaticPaths() {
-    const response = await wpQuery({
-        query: `
-        query AllTags {
-          tags {
-            nodes {
-              name
-              slug
-            }
-          }
-        }
-      `
-    });
-
-    //  assign the array of nodes to "posts" variable for usability
-    const tags = response.tags.nodes;
-
-    // transform our array of tag objects into an array of {params: {tag: "tag-slug"}}
-    type TagType = { tag: { slug: string; name: string } };
-    const paths = tags.map((tag: TagType) => {
+    const tags = await getAllTags();
+    const paths = tags.map((tag:any) => {
         return {
             params: { tag: tag.slug },
-            props: { tagName: tag.name }
+            props: { tagName: tag.name, tagDescription: tag.description }
         };
     });
 
@@ -34,12 +20,12 @@ export async function getStaticPaths() {
 }
 
 const { tag } = Astro.params;
-const { tagName } = Astro.props;
+const { tagName, tagDescription } = Astro.props;
 
-const posts = await postByTagQuery(tag)
+const posts = await postByTagQuery(tag);
 ---
 
-<Layout>
+<Layout title={tagName} description={tagDescription}>
     <div class="bg-slate-200 rounded-lg py-12">
         <h1 class="text-center text-3xl">{tagName}</h1>
     </div>

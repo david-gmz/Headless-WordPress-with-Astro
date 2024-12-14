@@ -1,10 +1,9 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import { wpQuery } from "@lib/wpQuery";
 import type { PaginateFn, WPPost } from "@lib/wpQuery";
-import { Image } from "astro:assets";
 import type { Page } from "astro";
 import PostCard from "@components/PostCard.astro";
+import { getAllPosts } from "@lib/getAllPosts";
 
 export const prerender = true;
 export async function getStaticPaths({
@@ -12,27 +11,7 @@ export async function getStaticPaths({
 }: {
     paginate: PaginateFn<WPPost>;
 }) {
-    const data = await wpQuery({
-        query: `
-        query AllPosts {
-          posts(where: {orderby: {field: DATE, order: DESC}}) {
-            nodes {
-              slug
-              date
-              title
-              excerpt
-              featuredImage {
-                node {
-                  sourceUrl,
-                  altText
-                }
-              }
-            }
-          }
-        }
-        `
-    });
-    const posts = data.posts.nodes;
+    const posts = await getAllPosts();
 
     return paginate(posts, { pageSize: 6 });
 }
@@ -41,17 +20,13 @@ const { page } = Astro.props as { page: Page<WPPost> };
 const posts = page.data;
 ---
 
-<Layout>
+<Layout title="All our news" description="Read all our stories">
     <div class="bg-slate-200 rounded-lg py-12">
-        <h1 class="text-center text-3xl">Our Articles</h1>
+        <h1 class="text-center text-3xl">Our Bambucletas Articles</h1>
     </div>
 
     <div class="flex flex-wrap pt-5 -mx-2.5">
-        {
-            posts.map((post: WPPost) => (
-                <PostCard post={post} />
-            ))
-        }
+        {posts.map((post: WPPost) => <PostCard post={post} />)}
     </div>
 
     <div class="flex gap-6 justify-center items-center py-12">
@@ -74,4 +49,5 @@ const posts = page.data;
             )
         }
     </div>
+    <div>What is this</div>
 </Layout>

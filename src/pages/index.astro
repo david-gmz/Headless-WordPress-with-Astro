@@ -1,8 +1,10 @@
 ---
-import RecentPosts from '@components/RecentPosts.astro';
-import Layout from '@layouts/Layout.astro';
+import RecentPosts from "@components/RecentPosts.astro";
+import Layout from "@layouts/Layout.astro";
 ---
 
-<Layout>
-	<RecentPosts />
+<Layout title="Headless Wordpress with Astro" description="A testing blog for viajo en bambucleta">
+    <RecentPosts server:defer>
+        <span slot="fallback" class="text-3xl opacity-70">Cargando...</span>
+    </RecentPosts>
 </Layout>
