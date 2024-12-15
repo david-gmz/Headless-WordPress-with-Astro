@@ -1,39 +1,5 @@
+import type { WPGraphQLparams } from "./types";
 import { API_BASE_URL } from "astro:env/server";
-
-interface WPGraphQLparams {
-    query: string;
-    variables?: object;
-}
-export interface WPPost {
-    slug: string;
-    date: string;
-    title: string;
-    excerpt: string;
-    featuredImage: null | {
-        node: {
-            sourceUrl: string;
-            altText: string;
-        };
-    };
-}
-
-export type PaginateFn<T> = (
-    items: T[],
-    options?: {
-        pageSize?: number;
-    }
-) => {
-    params: { page: string | number };
-    props: {
-        page: {
-            data: T[];
-            currentPage: number;
-            lastPage: number;
-            // Add other properties as needed
-            // You might want to include total count, etc.
-        };
-    };
-};
 
 export async function wpQuery({ query, variables = {} }: WPGraphQLparams) {
     const response = await fetch(API_BASE_URL, {

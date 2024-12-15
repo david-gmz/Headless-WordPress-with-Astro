@@ -1,29 +1,18 @@
 ---
-import { fetchSinglePost } from "@lib/singlePostQuery";
-import Layout from "@layouts/Layout.astro";
 import { Image } from "astro:assets";
-import { wpQuery } from "@lib/wpQuery";
+import Layout from "@layouts/Layout.astro";
+import { getAllSlugs } from "@lib/getAllSlugs";
+import { getSinglePost } from "@lib/getSinglePost";
 
 export async function getStaticPaths() {
-    const response = await wpQuery({
-        query: `
-        query AllSlugs {
-          posts {
-            nodes {
-              slug
-            }
-          }
-        }
-        `
-    });
-    const posts = response.posts.nodes;
+    const posts = await getAllSlugs()
     const paths = posts.map((post: string) => ({ params: post }));
 
     return paths;
 }
 const { slug } = Astro.params;
 
-const singlePost = await fetchSinglePost(slug);
+const singlePost = await getSinglePost(slug);
 ---
 
 <Layout>

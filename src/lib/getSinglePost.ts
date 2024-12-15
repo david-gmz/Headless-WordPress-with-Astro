@@ -1,7 +1,7 @@
 import { wpQuery } from "./wpQuery";
 
-export const fetchSinglePost = async (slug: string) => {
-    const singleResponse = await wpQuery({
+export const getSinglePost = async (slug: string) => {
+    const data = await wpQuery({
             query: `
         query SinglePost($id: ID = "${slug}") {
           post(idType: SLUG, id: $id) {
@@ -20,5 +20,5 @@ export const fetchSinglePost = async (slug: string) => {
         })
 
     //  assign the post info to singlePost variable for usability
-    return singleResponse.post;
+    return data.post;
 };

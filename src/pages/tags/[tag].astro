@@ -1,15 +1,14 @@
 ---
-import PostCard from "@components/PostCard.astro";
+import type { Tag } from "@lib/types";
 import Layout from "@layouts/Layout.astro";
 import { getAllTags } from "@lib/getAllTags";
+import PostCard from "@components/PostCard.astro";
 import { postByTagQuery } from "@lib/postByTagQuery";
+
 export const prerender = true;
-interface TagType {
-    tag: { slug: string; name: string };
-}
 export async function getStaticPaths() {
-    const tags = await getAllTags();
-    const paths = tags.map((tag:any) => {
+    const tags:Tag[] = await getAllTags();
+    const paths = tags.map((tag: Tag) => {
         return {
             params: { tag: tag.slug },
             props: { tagName: tag.name, tagDescription: tag.description }
