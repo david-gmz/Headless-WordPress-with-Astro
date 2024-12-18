@@ -11,11 +11,7 @@ const { post } = Astro.props;
                 post.featuredImage && (
                     <Image
                         class="w-full object-cover aspect-2/3 mb-5"
-                        alt={
-                            post.featuredImage.node.altText
-                                ? post.featuredImage.node.altText
-                                : post.title
-                        }
+                        alt={post.featuredImage.node.altText ?? post.title}
                         src={post.featuredImage.node.sourceUrl}
                         transition:name={`img-${post.slug}`}
                         width={600}
@@ -32,7 +28,7 @@ const { post } = Astro.props;
         </div>
         <a
             class="inline-block bg-slate-600 text-white rounded-md px-6 py-3 hover:bg-slate-500"
-            href={`/blog/${post.slug}`}>Read More</a
+            href={`/post/${post.slug}`}>Read More</a
         >
     </article>
 </div>

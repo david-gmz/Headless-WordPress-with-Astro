@@ -1,7 +1,7 @@
-import type { WPGraphQLparams } from "./types";
+import type { WpGraphQLparams } from "./types";
 import { API_BASE_URL } from "astro:env/server";
 
-export async function wpQuery({ query, variables = {} }: WPGraphQLparams) {
+export async function wpQuery({ query, variables = {} }: WpGraphQLparams) {
     const response = await fetch(API_BASE_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

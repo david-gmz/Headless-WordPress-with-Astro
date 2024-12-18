@@ -1,14 +1,14 @@
 ---
-import type { Tag } from "@lib/types";
+import type { ItemSlugNodes } from "@lib/types";
 import Layout from "@layouts/Layout.astro";
-import { getAllTags } from "@lib/getAllTags";
+import { getAllItemSlugs } from "@lib/getAllItemSlugs";
 import PostCard from "@components/PostCard.astro";
 import { postByTagQuery } from "@lib/postByTagQuery";
 
 export const prerender = true;
 export async function getStaticPaths() {
-    const tags:Tag[] = await getAllTags();
-    const paths = tags.map((tag: Tag) => {
+    const tags:ItemSlugNodes[] = await getAllItemSlugs("tags");
+    const paths = tags.map((tag: ItemSlugNodes) => {
         return {
             params: { tag: tag.slug },
             props: { tagName: tag.name, tagDescription: tag.description }

@@ -1,6 +1,6 @@
 import { wpQuery } from "./wpQuery";
 
-export const postByTagQuery = async (tag:any) => {
+export const postByTagQuery = async (tag: string) => {
     const data = await wpQuery({
         query: `
         query SingleTag($id: ID = "${tag}") {
@@ -25,6 +25,5 @@ export const postByTagQuery = async (tag:any) => {
         `
     });
 
-    //  assign the post info to singlePost variable for usability
     return data.tag.posts.nodes;
 };

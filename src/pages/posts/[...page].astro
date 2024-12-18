@@ -1,21 +1,21 @@
 ---
-import Layout from "@layouts/Layout.astro";
-import type { PaginateFn, WPPost } from "@lib/types";
 import type { Page } from "astro";
+import Layout from "@layouts/Layout.astro";
+import { getAllItems } from "@lib/getAllItems";
 import PostCard from "@components/PostCard.astro";
-import { getAllPosts } from "@lib/getAllPosts";
+import type { PaginateFn, WpPost } from "@lib/types";
 
 export const prerender = true;
 export async function getStaticPaths({
     paginate
 }: {
-    paginate: PaginateFn<WPPost>;
+    paginate: PaginateFn<WpPost>;
 }) {
-    const posts = await getAllPosts();
+    const posts = await getAllItems("posts");
 
     return paginate(posts, { pageSize: 6 });
 }
-const { page } = Astro.props as { page: Page<WPPost> };
+const { page } = Astro.props as { page: Page<WpPost> };
 
 const posts = page.data;
 ---
@@ -26,7 +26,7 @@ const posts = page.data;
     </div>
 
     <div class="flex flex-wrap pt-5 -mx-2.5">
-        {posts.map((post: WPPost) => <PostCard post={post} />)}
+        {posts.map((post: WpPost) => <PostCard post={post} />)}
     </div>
 
     <div class="flex gap-6 justify-center items-center py-12">

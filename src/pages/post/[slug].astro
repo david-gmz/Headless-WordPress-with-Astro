@@ -1,18 +1,18 @@
 ---
 import { Image } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
-import { getAllSlugs } from "@lib/getAllSlugs";
-import { getSinglePost } from "@lib/getSinglePost";
+import { getAllItemSlugs } from "@lib/getAllItemSlugs";
+import { getSingleItemBySlug } from "@lib/getSingleItemBySlug";
 
 export async function getStaticPaths() {
-    const posts = await getAllSlugs()
+    const posts = await getAllItemSlugs("posts");
     const paths = posts.map((post: string) => ({ params: post }));
 
     return paths;
 }
 const { slug } = Astro.params;
 
-const singlePost = await getSinglePost(slug);
+const singlePost = await getSingleItemBySlug(slug, "post");
 ---
 
 <Layout>
@@ -38,9 +38,8 @@ const singlePost = await getSinglePost(slug);
                 <Image
                     class="w-full object-cover aspect-2/3 mb-5"
                     alt={
-                        singlePost.featuredImage.node.altText
-                            ? singlePost.featuredImage.node.altText
-                            : singlePost.title
+                        singlePost.featuredImage.node.altText ??
+                        singlePost.title
                     }
                     src={singlePost.featuredImage.node.sourceUrl}
                     width={1500}

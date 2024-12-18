@@ -1,0 +1,92 @@
+---
+import { Image } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import { getAllItemSlugs } from "@lib/getAllItemSlugs";
+import { getSingleItemBySlug } from "@lib/getSingleItemBySlug";
+import type { WpCPTProperties, ItemSlugNodes } from "@lib/types";
+import Map from "@components/Map.astro";
+
+export async function getStaticPaths() {
+    const properties: ItemSlugNodes[] = await getAllItemSlugs("properties");
+    const paths = properties.map((property: ItemSlugNodes) => {
+        return {
+            params: { property: property.slug },
+            props: {
+                propertyName: property.name,
+                propertyDescription: property.description
+            }
+        };
+    });
+
+    return paths;
+}
+
+const { property } = Astro.params;
+const { propertyName, propertyDescription } = Astro.props;
+
+const singleProperty: WpCPTProperties = await getSingleItemBySlug(
+    property,
+    "property"
+);
+---
+
+<Layout title={propertyName} description={propertyDescription}>
+    <article class="max-w-screen-md mx-auto">
+        <div class="grid grid-cols-2 gap-8">
+            <div>
+                {
+                    singleProperty.featuredImage && (
+                        <Image
+                            class="w-full object-cover mb-5"
+                            alt={
+                                singleProperty.featuredImage.node.altText ??
+                                singleProperty.title
+                            }
+                            src={singleProperty.featuredImage.node.sourceUrl}
+                            width={1500}
+                            height={1000}
+                        />
+                    )
+                }
+            </div>
+            <div>
+                <h1 class="text-2xl py-8 font-bold">{singleProperty.title}</h1>
+                <table
+                    class="w-full table-auto border-collapse border-t border-slate-600">
+                    <tbody>
+                        <tr>
+                            <td class="border-b border-slate-600 py-4 font-bold"
+                                >Price:</td
+                            >
+                            <td class="border-b border-slate-600 text-right"
+                                >${
+                                    new Intl.NumberFormat("en-US").format(
+                                        singleProperty.propertyFields.price
+                                    )
+                                }</td
+                            >
+                        </tr>
+                        <tr>
+                            <td class="border-b border-slate-600 py-4 font-bold"
+                                >Square Footage:</td
+                            >
+                            <td class="border-b border-slate-600 text-right"
+                                >{singleProperty.propertyFields.squareFootage} ft<sup
+                                    >2</sup
+                                ></td
+                            >
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div
+            class="w-full h-[400px] bg-slate-300 flex justify-center items-center">
+            <Map
+                lat={singleProperty.propertyFields.latitude}
+                lng={singleProperty.propertyFields.longitude}
+            />
+        </div>
+    </article>
+</Layout>

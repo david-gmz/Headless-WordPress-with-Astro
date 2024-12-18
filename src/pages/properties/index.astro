@@ -1,0 +1,26 @@
+---
+import { getAllItems } from "@lib/getAllItems";
+import Layout from "@layouts/Layout.astro";
+import type { WpCPTProperties } from "@lib/types";
+import PropertyCard from "@components/PropertyCard.astro";
+
+const properties: WpCPTProperties[] = await getAllItems("properties");
+---
+
+<Layout title="WpCPTProperties" description="All properties you can buy">
+    <div class="bg-slate-200 rounded-lg py-12">
+        <h1 class="text-center text-3xl">WpCPTProperties for sale</h1>
+    </div>
+
+    <div class="flex flex-wrap pt-5 -mx-2.5">
+        {
+            properties.map(property => (
+                <PropertyCard property={property} server:defer>
+                    <span slot="fallback" class="text-3xl opacity-70">
+                        Cargando...
+                    </span>
+                </PropertyCard>
+            ))
+        }
+    </div>
+</Layout>

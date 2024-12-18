@@ -1,13 +1,29 @@
-export interface Tag {
+export interface ItemSlugNodes {
     slug: string;
-    name: string;
-    description: string;
+    name?: string;
+    description?: string;
 }
-export interface WPGraphQLparams {
+export interface WpCPTProperties {
+    propertyFields: {
+        latitude: string;
+        longitude: string;
+        price: number;
+        squareFootage: number;
+    };
+    title: string;
+    slug: string;
+    featuredImage: null | {
+        node: {
+            sourceUrl: string;
+            altText: string;
+        };
+    };
+}
+export interface WpGraphQLparams {
     query: string;
     variables?: object;
 }
-export interface WPPost {
+export interface WpPost {
     slug: string;
     date: string;
     title: string;

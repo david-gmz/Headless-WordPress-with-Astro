@@ -1,0 +1,30 @@
+---
+const { lat, lng } = Astro.props;
+---
+
+<div id="map" style="height: 400px; width: 100%;" data-lat={lat} data-lng={lng}>
+</div>
+
+<script>
+    import L from "leaflet";
+
+    const mapElement = document.getElementById("map");
+    if (mapElement) {
+        const lat = parseFloat(mapElement.dataset.lat as string);
+        const lng = parseFloat(mapElement.dataset.lng as string);
+        const zoomLevel = 13;
+
+        const map = L.map(mapElement).setView([lat, lng], zoomLevel);
+        console.log(map);
+
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            maxZoom: 19,
+            attribution:
+                '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        const marker = L.marker([lat, lng]).addTo(map);
+    } else {
+        console.error("map Element not found");
+    }
+</script>
