@@ -3,8 +3,15 @@ import Layout from "@layouts/Layout.astro";
 import RecentPosts from "@components/RecentPosts.astro";
 ---
 
-<Layout title="Headless Wordpress with Astro" description="A testing blog for viajo en bambucleta">
+<Layout
+    title="Headless Wordpress with Astro"
+    description="A testing blog for viajo en bambucleta">
     <RecentPosts server:defer>
-        <span slot="fallback" class="text-3xl opacity-70">Cargando...</span>
+        <span
+            slot="fallback"
+            class="text-3xl opacity-70 text-slate-800
+                dark:text-slate-300"
+            >Cargando...</span
+        >
     </RecentPosts>
 </Layout>

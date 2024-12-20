@@ -6,8 +6,12 @@ import PostCard from "./PostCard.astro";
 const posts = await recentPostsQuery();
 ---
 
-<div class="bg-slate-200 rounded-lg py-12">
-    <h1 class="text-center text-3xl">Our Articles</h1>
+<div class="bg-slate-200 dark:bg-slate-700 rounded-lg py-12">
+    <h1
+        class="text-center text-3xl text-slate-800
+                dark:text-slate-300">
+        Our Articles
+    </h1>
 </div>
 
 <section class="flex flex-wrap pt-5 -mx-2.5">

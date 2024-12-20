@@ -25,8 +25,8 @@ const posts = await postByTagQuery(tag);
 ---
 
 <Layout title={tagName} description={tagDescription}>
-    <div class="bg-slate-200 rounded-lg py-12">
-        <h1 class="text-center text-3xl">{tagName}</h1>
+    <div class="bg-slate-200 dark:bg-slate-700 rounded-lg py-12">
+        <h1 class="text-center dark:text-slate-200 text-3xl">{tagName}</h1>
     </div>
     <div class="flex flex-wrap pt-5 -mx-2.5">
         {posts.map((post: string) => <PostCard post={post} />)}
