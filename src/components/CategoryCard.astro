@@ -1,0 +1,14 @@
+---
+const { item } = Astro.props;
+---
+
+<a href={item.slug} class="grid grid-rows-subgrid group h-full">
+    <article
+        class="bg-card p-6 rounded-lg shadow-md transition-transform hover:scale-105 h-full flex flex-col">
+        <span class="text-4xl mb-4 block">{item.icon}</span>
+        <h3 class="text-xl font-semibold mb-2 group-hover:text-accent">
+            {item.name}
+        </h3>
+        <p class="text-muted-foreground flex-grow">{item.description}</p>
+    </article>
+</a>

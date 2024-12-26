@@ -1,0 +1,54 @@
+---
+import FooterSection from "@components/footer/FooterSection.astro";
+import FooterLink from "@components/footer/FooterLink.astro";
+import Button from "@components/ui/Button.astro";
+---
+
+<footer class="border-t">
+    <div class="container py-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="space-y-4">
+                <h2 class="text-xl font-bold">Bambucleta nomade</h2>
+                <p class="text-muted-foreground">
+                    Explorando el mundo sobre dos ruedas.
+                </p>
+                <div class="flex gap-2">
+                    <Button
+                        variant="icon"
+                        href="https://twitter.com"
+                        aria-label="Twitter">𝕏</Button
+                    >
+                    <Button
+                        variant="icon"
+                        href="https://instagram.com"
+                        aria-label="Instagram">📸</Button
+                    >
+                </div>
+            </div>
+
+            <FooterSection title="Categorías">
+                <li><FooterLink href="/historia">Historia</FooterLink></li>
+                <li><FooterLink href="/tutoriales">Tutoriales</FooterLink></li>
+                <li>
+                    <FooterLink href="/reflexiones">Reflexiones</FooterLink>
+                </li>
+            </FooterSection>
+
+            <FooterSection title="Enlaces">
+                <li><FooterLink href="/about">Sobre mí</FooterLink></li>
+                <li><FooterLink href="/contact">Contacto</FooterLink></li>
+                <li><FooterLink href="/rss">RSS</FooterLink></li>
+            </FooterSection>
+
+            <FooterSection title="Legal">
+                <li><FooterLink href="/privacy">Privacidad</FooterLink></li>
+                <li><FooterLink href="/terms">Términos</FooterLink></li>
+            </FooterSection>
+        </div>
+
+        <div
+            class="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
+            © {new Date().getFullYear()} Bambucleta nomade. Todos los derechos reservados.
+        </div>
+    </div>
+</footer>

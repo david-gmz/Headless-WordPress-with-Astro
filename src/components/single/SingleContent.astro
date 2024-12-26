@@ -1,0 +1,24 @@
+---
+interface Props {
+    content?: string;
+    image?: {
+        src: string;
+        alt: string;
+    };
+}
+
+const { content, image } = Astro.props;
+---
+
+<div class="prose dark:prose-invert max-w-none">
+    {
+        image && (
+            <img
+                src={image.src}
+                alt={image.alt}
+                class="w-full h-[400px] object-cover rounded-lg mb-8"
+            />
+        )
+    }
+    <slot />
+</div>

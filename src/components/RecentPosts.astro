@@ -1,19 +1,16 @@
 ---
 import { recentPostsQuery } from "@lib/recentPostsQuery";
 import type { WpPost } from "@lib/types";
-import PostCard from "./PostCard.astro";
+import Card from "./Card.astro";
 
 const posts = await recentPostsQuery();
 ---
 
-<div class="bg-slate-200 dark:bg-slate-700 rounded-lg py-12">
-    <h1
-        class="text-center text-3xl text-slate-800
-                dark:text-slate-300">
-        Our Articles
-    </h1>
-</div>
-
-<section class="flex flex-wrap pt-5 -mx-2.5">
-    {posts.map((post: WpPost) => <PostCard post={post} />)}
+<section class="py-16">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-8">Publicaciones Recientes</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {posts.map((post: WpPost) => <Card item={post} />)}
+        </div>
+    </div>
 </section>

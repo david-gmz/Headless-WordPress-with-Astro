@@ -1,11 +1,14 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import RecentPosts from "@components/RecentPosts.astro";
+import Hero from "@components/Hero.astro";
+import Categories from "@components/Categories.astro";
 ---
 
 <Layout
     title="Headless Wordpress with Astro"
     description="A testing blog for viajo en bambucleta">
+    <Hero />
     <RecentPosts server:defer>
         <span
             slot="fallback"
@@ -14,4 +17,5 @@ import RecentPosts from "@components/RecentPosts.astro";
             >Cargando...</span
         >
     </RecentPosts>
+    <Categories />
 </Layout>

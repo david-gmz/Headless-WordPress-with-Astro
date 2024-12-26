@@ -1,0 +1,35 @@
+---
+import CategoryCard from "./CategoryCard.astro";
+
+const categories = [
+  {
+    name: "Historia",
+    description: "Relatos y experiencias de viajes en bicicleta",
+    icon: "📖",
+    slug: "/historia"
+  },
+  {
+    name: "Tutoriales",
+    description: "Guías prácticas y consejos técnicos",
+    icon: "🔧",
+    slug: "/tutoriales"
+  },
+  {
+    name: "Reflexiones",
+    description: "Pensamientos y aprendizajes del camino",
+    icon: "💭",
+    slug: "/reflexiones"
+  }
+];
+---
+
+<section class="py-16">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-8">Categorías</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {categories.map(category => (
+        <CategoryCard item={category} />
+      ))}
+    </div>
+  </div>
+</section>

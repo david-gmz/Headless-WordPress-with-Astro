@@ -1,0 +1,32 @@
+---
+import Logo from "@components/ui/Logo.astro";
+import ThemeToggle from "@components/ThemeToggle.astro";
+import MobileMenu from "./mobilemenu/MobileMenu.astro";
+import NavLinks from "./mobilemenu/NavLinks.astro";
+---
+
+<style>
+    .logo-svg path {
+        fill: currentColor;
+    }
+</style>
+<header
+    class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <nav class="container mx-auto px-4 h-16 flex items-center justify-between">
+        <a href="/" class="text-2xl font-bold flex items-center gap-3">
+            <Logo class="w-14 h-auto" />
+            <span>Bambucleta nomade</span>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center gap-6">
+            <NavLinks />
+            <ThemeToggle />
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div class="md:hidden">
+            <MobileMenu />
+        </div>
+    </nav>
+</header>
