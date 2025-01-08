@@ -23,4 +23,6 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-
+# vanila md test files
+data/
+bitacora.md

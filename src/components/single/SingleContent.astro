@@ -1,11 +1,5 @@
 ---
-interface Props {
-    content?: string;
-    image?: {
-        src: string;
-        alt: string;
-    };
-}
+import { Image } from "astro:assets";
 
 const { content, image } = Astro.props;
 ---
@@ -13,12 +7,49 @@ const { content, image } = Astro.props;
 <div class="prose dark:prose-invert max-w-none">
     {
         image && (
-            <img
+            <Image
                 src={image.src}
                 alt={image.alt}
                 class="w-full h-[400px] object-cover rounded-lg mb-8"
+                width={600}
+                height={400}
             />
         )
     }
-    <slot />
+    <article id="article" class="prose dark:prose-invert max-w-none">
+        {content}
+    </article>
 </div>
+
+<script>
+    /**
+     * Calculates and displays the reading time for an article
+     * @return {void}
+     */
+    function getReadingTime(): void {
+        const WORDS_PER_MINUTE = 225;
+        const SELECTOR = {
+            article: 'article',
+            time: 'time'
+        };
+
+        try {
+            const articleElement = document.getElementById(SELECTOR.article);
+            const timeElement = document.getElementById(SELECTOR.time);
+
+            if (!articleElement || !timeElement) {
+                console.warn('Required elements not found');
+                return;
+            }
+
+            const text = articleElement.innerText;
+            const words = text.trim().split(/\s+/).length;
+            const readingTimeMinutes = Math.ceil(words / WORDS_PER_MINUTE);
+
+            timeElement.innerText = `tiempo de lectura: ${readingTimeMinutes} min`;
+        } catch (error) {
+            console.error('Error calculating reading time:', error);
+        }
+    }
+    getReadingTime();
+</script>

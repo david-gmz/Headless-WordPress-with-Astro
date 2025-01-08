@@ -3,13 +3,7 @@ export interface ItemSlugNodes {
     name?: string;
     description?: string;
 }
-export interface WpCPTProperties {
-    propertyFields: {
-        latitude: string;
-        longitude: string;
-        price: number;
-        squareFootage: number;
-    };
+export interface WpCPTBitacoras {
     title: string;
     slug: string;
     featuredImage: null | {
@@ -17,6 +11,15 @@ export interface WpCPTProperties {
             sourceUrl: string;
             altText: string;
         };
+    };
+    lugar: {
+        ciudad: string;
+        fecha: string;
+        nombreDelPais: string;
+    };
+    coordenadas: {
+        longitud: number;
+        latitud: number;
     };
 }
 export interface WpGraphQLparams {
@@ -27,7 +30,9 @@ export interface WpPost {
     slug: string;
     date: string;
     title: string;
-    excerpt: string;
+    summary: {
+        shortContent: string;
+    };
     featuredImage: null | {
         node: {
             sourceUrl: string;

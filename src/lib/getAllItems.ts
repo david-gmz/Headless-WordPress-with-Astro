@@ -1,5 +1,5 @@
 import { wpQuery } from "./wpQuery";
-type Items = "properties" | "posts";
+type Items = "bitacoras" | "tutoriales";
 
 /**
  * Fetches all items (either properties or posts) from a WordPress GraphQL endpoint
@@ -8,13 +8,7 @@ type Items = "properties" | "posts";
  *               to determine which type of content to fetch
  *
  * @returns Promise<Array> - Returns a promise that resolves to an array of nodes containing:
- *   For properties:
- *     - propertyFields: {
- *         latitude: number
- *         longitude: number
- *         price: number
- *         squareFootage: number
- *       }
+ *   For bitacoras:
  *     - title: string (rendered format)
  *     - slug: string
  *     - featuredImage: {
@@ -22,6 +16,11 @@ type Items = "properties" | "posts";
  *           sourceUrl: string
  *           altText: string
  *         }
+ *       }
+ *      - lugar {
+ *           ciudad: string
+ *           fecha: string
+ *           nombreDelPais: string
  *       }
  *
  *   For posts:
@@ -47,18 +46,15 @@ type Items = "properties" | "posts";
  */
 export async function getAllItems(items: Items) {
     const query =
-        items === "properties"
+        items === "bitacoras"
             ? `
-          query AllProperties {
-          properties {
+          query Allbitacoras {
+          bitacorasDeViaje {
             nodes {
-              propertyFields {
-                latitude
-                longitude
-                price
-                squareFootage
-              }
               title(format: RENDERED)
+              summary {
+                shortContent
+              }
               slug
               featuredImage {
                 node {
@@ -66,18 +62,25 @@ export async function getAllItems(items: Items) {
                   altText
                 }
               }
+              lugar {
+                ciudad
+                fecha
+                nombreDelPais
+              }
             }
           }
         }
         `
             : `
           query AllPosts {
-          posts(where: {orderby: {field: DATE, order: DESC}}) {
+          ${items}(where: {orderby: {field: DATE, order: DESC}}) {
             nodes {
               slug
               date
               title
-              excerpt
+              summary {
+                shortContent
+              }
               featuredImage {
                 node {
                   sourceUrl,

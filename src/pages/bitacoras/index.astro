@@ -1,27 +1,27 @@
 ---
 import { getAllItems } from "@lib/getAllItems";
 import Layout from "@layouts/Layout.astro";
-import type { WpCPTProperties } from "@lib/types";
-import PropertyCard from "@components/PropertyCard.astro";
+import type { WpCPTBitacoras } from "@lib/types";
+import BitacoraCard from "@components/BitacoraCard.astro";
 
-const properties: WpCPTProperties[] = await getAllItems("properties");
+const bitacoras: WpCPTBitacoras[] = await getAllItems("bitacoras");
 ---
 
-<Layout title="Properties" description="All properties you can buy">
+<Layout title="Bitacoras" description="All bitacoras you can buy">
     <div class="bg-slate-200 dark:bg-slate-800 rounded-lg py-12">
-        <h1 class="text-center dark:text-slate-300 text-3xl">Properties for sale</h1>
+        <h1 class="text-center dark:text-slate-300 text-3xl">Bitacoras</h1>
     </div>
 
     <div class="flex flex-wrap pt-5 -mx-2.5">
         {
-            properties.map(property => (
-                <PropertyCard property={property} server:defer>
+            bitacoras.map(bitacora => (
+                <BitacoraCard property={bitacora} server:defer>
                     <span
                         slot="fallback"
                         class="bg-slate-200 dark:bg-slate-800 text-3xl opacity-70">
                         Cargando...
                     </span>
-                </PropertyCard>
+                </BitacoraCard>
             ))
         }
     </div>

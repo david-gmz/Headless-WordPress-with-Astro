@@ -1,21 +1,35 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import RecentPosts from "@components/RecentPosts.astro";
+import RecentItems from "@components/RecentItems.astro";
 import Hero from "@components/Hero.astro";
 import Categories from "@components/Categories.astro";
+import Navigation from "@components/Navigation.astro";
+import NavBar from "@components/mobilemenu/NavBar.astro";
 ---
 
 <Layout
     title="Headless Wordpress with Astro"
     description="A testing blog for viajo en bambucleta">
+    <NavBar />
     <Hero />
-    <RecentPosts server:defer>
+    <RecentItems
+        title="Bitacoras Recientes"
+        items="bitacorasDeViaje"
+        server:defer>
         <span
             slot="fallback"
-            class="text-3xl opacity-70 text-slate-800
+            class="prosa text-3xl text-center block m-8 opacity-70 text-slate-800
                 dark:text-slate-300"
             >Cargando...</span
         >
-    </RecentPosts>
+    </RecentItems>
+    <RecentItems title="Tutoriales Recientes" items="tutoriales" server:defer>
+        <span
+            slot="fallback"
+            class="prosa text-3xl text-center block m-8 opacity-70 text-slate-800
+                dark:text-slate-300"
+            >Cargando...</span
+        >
+    </RecentItems>
     <Categories />
 </Layout>

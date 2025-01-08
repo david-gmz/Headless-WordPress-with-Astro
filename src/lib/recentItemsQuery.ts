@@ -1,15 +1,17 @@
 import { wpQuery } from "./wpQuery";
-
-export const recentPostsQuery = async () => {
+type Items = "bitacorasDeViaje" | "tutoriales";
+export const recentItemsQuery = async (items:Items) => {
     const data = await wpQuery({
         query: `
         query RecentPosts {
-          posts(where: {orderby: {field: DATE, order: DESC}}, first:3) {
+          ${items}(where: {orderby: {field: DATE, order: DESC}}, first:3) {
             nodes {
               slug
               date
-              title
-              excerpt
+              title(format: RENDERED)
+              summary {
+                shortContent
+              }
               featuredImage {
                 node {
                   sourceUrl,
@@ -21,5 +23,5 @@ export const recentPostsQuery = async () => {
         }
         `
     });
-    return data.posts.nodes;
+    return data[items].nodes;
 };

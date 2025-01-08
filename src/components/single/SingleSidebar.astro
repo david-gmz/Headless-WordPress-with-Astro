@@ -11,12 +11,55 @@ interface Props {
         title: string;
         id: string;
     }[];
+    countryData: {
+        name: {
+            nativeName: {
+                spa: {
+                    common: string;
+                };
+            };
+        };
+        capital: string;
+        flags: {
+            svg: string;
+        };
+        population: number;
+        area: number;
+        maps: {
+            googleMaps: string;
+        };
+    }[];
 }
 
-const { author, tableOfContents } = Astro.props;
+const { author, tableOfContents, countryData } = Astro.props;
 ---
 
 <div class="space-y-8">
+    <!-- Country Data -->
+    <div class="bg-card rounded-lg p-6">
+        <img
+            src={countryData[0].flags.svg}
+            alt={countryData[0].name.nativeName.spa.common}
+            class="w-24 h-16 mb-4"
+        />
+        <h3 class="font-medium mb-4">
+            {countryData[0].name.nativeName.spa.common}
+        </h3>
+
+        <p class="text-sm text-muted-foreground">
+            <strong>Población:</strong>
+            {countryData[0].population}
+        </p>
+        <p class="text-sm text-muted-foreground">
+            <strong>Area:</strong>
+            {countryData[0].area} km²
+        </p>
+        <p class="text-sm text-muted-foreground">
+            <strong>Capital:</strong>
+            {countryData[0].capital}
+        </p>
+        <Button variant="secondary" href={countryData[0].maps.googleMaps} class="w-full mt-4">Ver en Google Maps</Button>
+    </div>
     <!-- Author -->
     <div class="bg-card rounded-lg p-6">
         <div class="flex items-center gap-4 mb-4">

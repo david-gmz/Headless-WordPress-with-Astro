@@ -1,6 +1,6 @@
 import { wpQuery } from "./wpQuery";
 
-type ItemType = "post" | "property";
+type ItemType = "tutorial" | "bitacora";
 /**
  * Fetches a single item from WordPress by its slug
  * @param slug - The URL slug of the item to fetch
@@ -10,11 +10,10 @@ type ItemType = "post" | "property";
  */
 export const getSingleItemBySlug = async (slug: string, item: ItemType) => {
     const query =
-        item !== "property"
+        item !== "bitacora"
             ? `
   query SinglePost($id: ID = "${slug}") {
     ${item}(idType: SLUG, id: $id) {
-      date
       content
       title
       featuredImage {
@@ -27,19 +26,25 @@ export const getSingleItemBySlug = async (slug: string, item: ItemType) => {
   }
   `
             : `
-        query propertyBySlug($id: ID = "${slug}") {
-          property(idType: SLUG, id: $id) {
-            propertyFields {
-              latitude
-              longitude
-              price
-              squareFootage
-            }
-            title(format: RENDERED)
+        query bitacoraBySlug($id: ID = "${slug}") {
+          bitacora(idType: SLUG, id: $id) {
             featuredImage {
               node {
-                sourceUrl
                 altText
+                sourceUrl
+              }
+            }
+            content
+            lugar {
+              ciudad
+              fecha
+              nombreDelPais
+            }
+            title(format: RENDERED)
+            ruta {
+              coordenadas {
+                longitud
+                latitud
               }
             }
           }

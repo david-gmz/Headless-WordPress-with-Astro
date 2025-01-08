@@ -1,6 +1,6 @@
 import { wpQuery } from "./wpQuery";
 
-type ItemTypes = "posts" | "properties" | "tags";
+type ItemTypes = "bitacorasDeViaje" | "tutoriales" | "tags";
 
 /**
  * Retrieves all slugs for a given item type (e.g., posts, properties, tags).

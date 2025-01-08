@@ -1,7 +1,5 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import Navigation from "@components/Navigation.astro";
-import Footer from "@components/footer/Footer.astro";
 import SingleHeader from "@components/single/SingleHeader.astro";
 import SingleContent from "@components/single/SingleContent.astro";
 import SingleSidebar from "@components/single/SingleSidebar.astro";
@@ -15,7 +13,7 @@ const post = {
     readingTime: "5",
     content: "Your markdown content here...",
     image: {
-        src: "/images/post-1.jpg",
+        src: "/public/5-bamboo-bike.jpg",
         alt: "Bicicleta en la montaña"
     },
     author: {
@@ -41,11 +39,14 @@ const relatedPosts = [
     }
     // Add more related posts...
 ];
+// Fetch country data at build time
+const countryData = await fetch(
+    "https://restcountries.com/v3.1/translation/mexico"
+).then(res => res.json());
+console.log(countryData);
 ---
 
 <Layout title={`${post.title} | Bambucleta nomade`}>
-    <Navigation />
-
     <SingleHeader
         title={post.title}
         category={post.category}
@@ -55,19 +56,17 @@ const relatedPosts = [
 
     <main class="container py-12">
         <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12">
-            <SingleContent image={post.image}>
-                <slot />
-            </SingleContent>
+            <SingleContent image={post.image} content={post.content} />
 
             <aside class="lg:sticky lg:top-20 lg:self-start">
                 <SingleSidebar
                     author={post.author}
                     tableOfContents={post.tableOfContents}
+                    countryData={countryData}
                 />
             </aside>
         </div>
     </main>
 
     <RelatedPost posts={relatedPosts} />
-    <Footer />
 </Layout>

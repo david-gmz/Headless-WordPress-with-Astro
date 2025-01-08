@@ -12,7 +12,7 @@ export async function getStaticPaths() {
 }
 const { slug } = Astro.params;
 
-const singlePost = await getSingleItemBySlug(slug, "post");
+const singlePost = await getSingleItemBySlug(slug, "bitacora");
 ---
 
 <Layout>

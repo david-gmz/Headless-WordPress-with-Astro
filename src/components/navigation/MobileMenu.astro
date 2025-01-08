@@ -1,0 +1,89 @@
+---
+import NavLinks from "./NavLinks.astro";
+import ThemeToggle from "../ThemeToggle.astro";
+---
+
+<div class="mobile-menu">
+    <button
+        id="mobile-menu-button"
+        class="p-2 hover:bg-accent rounded-md"
+        aria-label="Toggle menu">
+        <svg
+            id="menu-icon"
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg
+            id="close-icon"
+            class="hidden w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+    </button>
+
+    <div
+        id="mobile-menu-panel"
+        class="fixed inset-y-0 right-0 w-64 bg-background border-l transform translate-x-full transition-transform duration-200 ease-in-out">
+        <div class="p-6 space-y-6">
+            <nav class="space-y-4">
+                <NavLinks />
+            </nav>
+            <div class="pt-4 border-t">
+                <ThemeToggle />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const button = document.getElementById("mobile-menu-button");
+    const panel = document.getElementById("mobile-menu-panel");
+    const menuIcon = document.getElementById("menu-icon");
+    const closeIcon = document.getElementById("close-icon");
+
+    let isOpen = false;
+
+    function toggleMenu() {
+        isOpen = !isOpen;
+
+        if (isOpen) {
+            panel?.classList.remove("translate-x-full");
+            menuIcon?.classList.add("hidden");
+            closeIcon?.classList.remove("hidden");
+        } else {
+            panel?.classList.add("translate-x-full");
+            menuIcon?.classList.remove("hidden");
+            closeIcon?.classList.add("hidden");
+        }
+    }
+
+    button?.addEventListener("click", toggleMenu);
+
+    // Close menu when clicking outside
+    document.addEventListener("click", event => {
+        const target = event.target as HTMLElement;
+        if (isOpen && !button?.contains(target) && !panel?.contains(target)) {
+            toggleMenu();
+        }
+    });
+</script>
+
+<style>
+    /* Prevent body scroll when menu is open */
+    :global(body.menu-open) {
+        overflow: hidden;
+    }
+</style>

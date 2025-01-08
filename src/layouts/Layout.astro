@@ -24,7 +24,6 @@ const { title, description } = Astro.props;
         <title>{title}</title>
     </head>
     <body>
-        <NavBar />
         <main>
             <div class="container mx-auto"></div>
             <slot />
@@ -112,5 +111,6 @@ const { title, description } = Astro.props;
     } else {
         document.documentElement.classList.add("dark");
     }
-    if (theme) window.localStorage.setItem("theme", theme);
+
+    window.localStorage.setItem("theme", theme || "light");
 </script>
