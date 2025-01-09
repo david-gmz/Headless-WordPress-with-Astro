@@ -1,6 +1,7 @@
 ---
 import { getAllItemSlugs } from "@lib/getAllItemSlugs";
 import type { ItemSlugNodes } from "@lib/types";
+import ToggleTheme from "./ToggleTheme.astro";
 
 const tags: ItemSlugNodes[] = await getAllItemSlugs("tags");
 ---
@@ -29,5 +30,6 @@ const tags: ItemSlugNodes[] = await getAllItemSlugs("tags");
                 ))
             }
         </div>
+        <ToggleTheme />
     </div>
 </header>

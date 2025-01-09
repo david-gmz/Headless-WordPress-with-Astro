@@ -1,0 +1,41 @@
+---
+interface Props {
+    class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg
+    class={className}
+    version="1.0"
+    xmlns="http://www.w3.org/2000/svg"
+    width="300"
+    height="236"
+    viewBox="0 0 300.000000 236.000000"
+    preserveAspectRatio="xMidYMid meet">
+    <style>
+        .logo-background {
+            fill: black;
+            transition: fill 0.3s ease;
+        }
+        .logo-foreground {
+            fill: white;
+            transition: fill 0.3s ease;
+        }
+
+        :global(.dark) .logo-background {
+            fill: white;
+        }
+        :global(.dark) .logo-foreground {
+            fill: black;
+        }
+    </style>
+    <rect class="logo-background" width="300" height="236" rx="90"></rect>
+    <g
+        class="logo-foreground"
+        transform="translate(0.000000,236.000000) scale(0.100000,-0.100000)"
+        stroke="none">
+        <!-- SVG paths remain the same -->
+    </g>
+</svg>

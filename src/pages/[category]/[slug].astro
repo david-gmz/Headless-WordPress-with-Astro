@@ -1,0 +1,73 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Navigation from "@components/Navigation.astro";
+import Footer from "@components/footer/Footer.astro";
+import PostHeader from "@components/post/PostHeader.astro";
+import PostContent from "@components/post/PostContent.astro";
+import PostSidebar from "@components/post/PostSidebar.astro";
+import RelatedPosts from "@components/post/RelatedPosts.astro";
+
+// Example data - In a real app, this would come from your CMS or API
+const post = {
+    title: "Mi primera aventura en bicicleta",
+    category: "Historia",
+    date: "2024-03-20",
+    readingTime: "5",
+    content: "Your markdown content here...",
+    image: {
+        src: "/images/post-1.jpg",
+        alt: "Bicicleta en la montaña"
+    },
+    author: {
+        name: "Juan Pérez",
+        bio: "Ciclista y escritor",
+        avatar: "/images/avatar.jpg"
+    },
+    tableOfContents: [
+        { title: "Introducción", id: "introduccion" },
+        { title: "El comienzo", id: "comienzo" },
+        { title: "La aventura", id: "aventura" },
+        { title: "Conclusión", id: "conclusion" }
+    ]
+};
+
+const relatedPosts = [
+    {
+        title: "Mantenimiento básico de tu bicicleta",
+        excerpt: "Guía completa para mantener tu bicicleta...",
+        slug: "/tutoriales/mantenimiento-basico",
+        category: "Tutoriales",
+        date: "2024-03-18"
+    }
+    // Add more related posts...
+];
+---
+
+<Layout title={`${post.title} | Bambucleta nomade`}>
+    <Navigation />
+
+    <PostHeader
+        title={post.title}
+        category={post.category}
+        date={post.date}
+        readingTime={post.readingTime}
+    />
+
+    <main class="container py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12">
+            <PostContent image={post.image}>
+                <slot />
+            </PostContent>
+
+            <aside class="lg:sticky lg:top-20 lg:self-start">
+                <PostSidebar
+                    author={post.author}
+                    tableOfContents={post.tableOfContents}
+                />
+            </aside>
+        </div>
+    </main>
+
+    <RelatedPosts posts={relatedPosts} />
+    <Footer />
+</Layout>

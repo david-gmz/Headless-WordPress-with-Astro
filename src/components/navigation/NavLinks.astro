@@ -1,0 +1,17 @@
+---
+const links = [
+    { href: "/historia", text: "Historia" },
+    { href: "/tutoriales", text: "Tutoriales" },
+    { href: "/reflexiones", text: "Reflexiones" }
+];
+---
+
+<div class="flex md:flex-row flex-col md:items-center md:gap-6 gap-4">
+    {
+        links.map(link => (
+            <a href={link.href} class="hover:text-accent transition-colors">
+                {link.text}
+            </a>
+        ))
+    }
+</div>

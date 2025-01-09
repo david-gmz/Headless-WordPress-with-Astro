@@ -1,0 +1,55 @@
+---
+import Button from "@components/ui/Button.astro";
+
+interface Props {
+    author: {
+        name: string;
+        bio: string;
+        avatar: string;
+    };
+    tableOfContents: {
+        title: string;
+        id: string;
+    }[];
+}
+
+const { author, tableOfContents } = Astro.props;
+---
+
+<div class="space-y-8">
+    <!-- Author -->
+    <div class="bg-card rounded-lg p-6">
+        <div class="flex items-center gap-4 mb-4">
+            <img
+                src={author.avatar}
+                alt={author.name}
+                class="w-12 h-12 rounded-full"
+            />
+            <div>
+                <h3 class="font-medium">{author.name}</h3>
+                <p class="text-sm text-muted-foreground">{author.bio}</p>
+            </div>
+        </div>
+        <Button variant="secondary" class="w-full">Seguir</Button>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="bg-card rounded-lg p-6">
+        <h3 class="font-medium mb-4">Contenido</h3>
+        <nav>
+            <ul class="space-y-2">
+                {
+                    tableOfContents.map(({ title, id }) => (
+                        <li>
+                            <a
+                                href={`#${id}`}
+                                class="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                                {title}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </nav>
+    </div>
+</div>

@@ -1,17 +1,16 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import RecentPosts from "@components/RecentPosts.astro";
+import Navigation from "@components/Navigation.astro";
+import Hero from "@components/Hero.astro";
+import Categories from "@components/Categories.astro";
+import Footer from "@components/Footer.astro";
 ---
 
-<Layout
-    title="Headless Wordpress with Astro"
-    description="A testing blog for viajo en bambucleta">
-    <RecentPosts server:defer>
-        <span
-            slot="fallback"
-            class="text-3xl opacity-70 text-slate-800
-                dark:text-slate-300"
-            >Cargando...</span
-        >
-    </RecentPosts>
+<Layout title="Bambucleta nomade - Explorando el mundo sobre dos ruedas">
+    <main>
+        <Hero />
+        <RecentPosts />
+        <Categories />
+    </main>
 </Layout>
