@@ -77,29 +77,3 @@
         display: none;
     }
 </style>
-
-<script>
-    // Function to handle theme toggle
-    function setupThemeToggle() {
-        const toggle = document.getElementById("theme-toggle");
-        if (toggle) {
-            toggle.removeEventListener("click", handleToggle); // Remove old listener
-            toggle.addEventListener("click", handleToggle); // Add new listener
-        }
-    }
-
-    // Toggle handler
-    function handleToggle() {
-        const element = document.documentElement;
-        element.classList.toggle("dark");
-
-        // Dispatch theme change event
-        window.dispatchEvent(new CustomEvent("theme-change"));
-    }
-
-    // Initialize toggler on initial load
-    setupThemeToggle();
-
-    // Reinitialize toggler on page navigation
-    window.addEventListener("astro:page-load", setupThemeToggle);
-</script>
