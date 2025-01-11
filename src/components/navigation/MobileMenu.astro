@@ -43,40 +43,88 @@ import NavLinks from "./NavLinks.astro";
         </div>
     </div>
 </div>
-
 <script>
-    const button = document.getElementById("mobile-menu-button");
-    const panel = document.getElementById("mobile-menu-panel");
-    const menuIcon = document.getElementById("menu-icon");
-    const closeIcon = document.getElementById("close-icon");
-
+    // Global state for the menu
     let isOpen = false;
+    let cleanup: (() => void) | null = null;
+    function setupMobileMenu() {
+        console.log("Setting up mobile menu...");
+        const button = document.getElementById("mobile-menu-button");
+        const panel = document.getElementById("mobile-menu-panel");
+        const menuIcon = document.getElementById("menu-icon");
+        const closeIcon = document.getElementById("close-icon");
 
-    function toggleMenu() {
-        isOpen = !isOpen;
+        console.log("Button: ", button);
+        console.log("Panel: ", panel);
+        console.log("Menu Icon: ", menuIcon);
+        console.log("Close Icon: ", closeIcon);
 
-        if (isOpen) {
-            panel?.classList.remove("translate-x-full");
-            menuIcon?.classList.add("hidden");
-            closeIcon?.classList.remove("hidden");
-        } else {
-            panel?.classList.add("translate-x-full");
-            menuIcon?.classList.remove("hidden");
-            closeIcon?.classList.add("hidden");
+        if (!button || !panel || !menuIcon || !closeIcon) {
+            console.error("Missing elements for mobile menu!");
+            return null;
         }
+        // Function to update the menu state
+        function updateMenuState() {
+            if (isOpen) {
+                panel?.classList.remove("translate-x-full");
+                menuIcon?.classList.add("hidden");
+                closeIcon?.classList.remove("hidden");
+                document.body.classList.add("menu-open");
+                console.log("Panel should be visible:", panel);
+            } else {
+                panel?.classList.add("translate-x-full");
+                menuIcon?.classList.remove("hidden");
+                closeIcon?.classList.add("hidden");
+                document.body.classList.remove("menu-open");
+                console.log("Panel should be hidden:", panel);
+            }
+        }
+
+        // Function to toggle the menu state
+        function toggleMenu() {
+            console.log("Toggling menu");
+            isOpen = !isOpen;
+            updateMenuState();
+        }
+
+        // Function to close the menu if clicked outside
+        function handleClickOutside(e: MouseEvent) {
+            if (
+                isOpen &&
+                !panel?.contains(e.target as Node) &&
+                !button?.contains(e.target as Node)
+            ) {
+                console.log("Clicking outside the menu");
+                isOpen = false;
+                updateMenuState();
+            }
+        }
+
+        // Add event listeners
+        button.addEventListener("click", toggleMenu);
+        document.addEventListener("click", handleClickOutside);
+
+        // Clean up function
+        return () => {
+            button.removeEventListener("click", toggleMenu);
+            document.removeEventListener("click", handleClickOutside);
+            console.log("Event listeners removed");
+        };
     }
 
-    button?.addEventListener("click", toggleMenu);
+    // Initial setup
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("DOMContentLoaded: Setting up mobile menu");
+        cleanup = setupMobileMenu();
+    });
 
-    // Close menu when clicking outside
-    document.addEventListener("click", event => {
-        const target = event.target as HTMLElement;
-        if (isOpen && !button?.contains(target) && !panel?.contains(target)) {
-            toggleMenu();
-        }
+    // Re-initialize after page load (including transitions)
+    document.addEventListener("astro:after-swap", () => {
+        console.log("astro:after-swap: Reinitializing mobile menu");
+        if (cleanup) cleanup(); // Clean up old listeners
+        cleanup = setupMobileMenu(); // Reinitialize
     });
 </script>
-
 <style>
     /* Prevent body scroll when menu is open */
     :global(body.menu-open) {
