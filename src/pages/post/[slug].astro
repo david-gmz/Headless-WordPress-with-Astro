@@ -5,7 +5,7 @@ import { getAllItemSlugs } from "@lib/getAllItemSlugs";
 import { getSingleItemBySlug } from "@lib/getSingleItemBySlug";
 
 export async function getStaticPaths() {
-    const posts = await getAllItemSlugs("posts");
+    const posts = await getAllItemSlugs("tags");
     const paths = posts.map((post: string) => ({ params: post }));
 
     return paths;
