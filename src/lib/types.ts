@@ -5,6 +5,10 @@ export interface ItemSlugNodes {
 }
 export interface WpCPTBitacoras {
     title: string;
+    summary: {
+        shortContent: string;
+    };
+    content: string;
     slug: string;
     featuredImage: null | {
         node: {

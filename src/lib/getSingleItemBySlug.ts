@@ -47,6 +47,11 @@ export const getSingleItemBySlug = async (slug: string, item: ItemType) => {
                 latitud
               }
             }
+            paises {
+              nodes {
+                name
+              }
+            }
           }
         }
         `;

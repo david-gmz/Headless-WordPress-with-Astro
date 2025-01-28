@@ -1,5 +1,5 @@
 import { wpQuery } from "./wpQuery";
-type Items = "bitacoras" | "tutoriales";
+type Items = "bitacorasDeViaje" | "tutoriales";
 
 /**
  * Fetches all items (either properties or posts) from a WordPress GraphQL endpoint
@@ -46,7 +46,7 @@ type Items = "bitacoras" | "tutoriales";
  */
 export async function getAllItems(items: Items) {
     const query =
-        items === "bitacoras"
+        items === "bitacorasDeViaje"
             ? `
           query Allbitacoras {
           bitacorasDeViaje {
@@ -55,6 +55,7 @@ export async function getAllItems(items: Items) {
               summary {
                 shortContent
               }
+              content
               slug
               featuredImage {
                 node {
@@ -81,6 +82,7 @@ export async function getAllItems(items: Items) {
               summary {
                 shortContent
               }
+              content
               featuredImage {
                 node {
                   sourceUrl,

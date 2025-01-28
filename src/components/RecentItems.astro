@@ -1,10 +1,10 @@
 ---
-import { recentItemsQuery } from "@lib/recentItemsQuery";
 import type { WpPost } from "@lib/types";
 import Card from "./Card.astro";
+import { getAllItems } from "@lib/getAllItems";
 
 const { title, items } = Astro.props;
-const itemsType = await recentItemsQuery(items);
+const itemsType = await getAllItems(items);
 ---
 
 <section class="py-16">

@@ -31,18 +31,24 @@ import Wheel from "./ui/Wheel.astro";
             </div>
 
             <!-- Right Column - Image -->
-            <div
-                class="relative">
+            <div class="relative">
                 <div class="aspect-w-4 aspect-h-3">
-                    <Logo class="object-cover object-center w-full h-full opacity-20" />
+                    <Logo
+                        class="object-cover object-center w-full h-full opacity-20"
+                    />
                 </div>
                 <div
-                    class="absolute -bottom-4 -right-4 w-20 h-20 bg-purple-200 dark:bg-purple-900 rounded-full"
+                    class="absolute -bottom-4 -right-4 w-20 h-20 bg-cyan-300 dark:bg-purple-900 rounded-full"
                     style="animation-delay: 1s">
-                    <Wheel class="w-20 h-20 opacity-30" />
+                    <Wheel
+                        class="w-20 h-20 opacity-30 motion-preset-spin motion-duration-[60s]"
+                    />
                 </div>
                 <div
-                    class="absolute -top-4 -left-4 w-16 h-16 bg-emerald-400 dark:bg-cyan-700 rounded-full"><Wheel class="w-16 h-16 opacity-30" />
+                    class="absolute -top-4 -left-4 w-16 h-16 bg-emerald-400 dark:bg-cyan-700 rounded-full">
+                    <Wheel
+                        class="w-16 h-16 opacity-30 motion-preset-spin motion-duration-[60s]"
+                    />
                 </div>
             </div>
         </div>

@@ -1,0 +1,36 @@
+---
+import ReflexionCard from "./ReflexionCard.astro";
+import { getCollection } from "astro:content";
+
+// Get latest reflexiones
+const colletions = await getCollection("reflexiones");
+export const prerender = false;
+console.log("Reflexiones", colletions);
+const latestReflexiones = colletions
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+    .slice(0, 3);
+---
+
+<section class="py-16">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-8 gradient-heading py-2">
+            Reflexiones Recientes
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {
+                latestReflexiones.map(post => (
+                    <ReflexionCard
+                        title={post.data.title}
+                        excerpt={post.data.excerpt}
+                        featuredImage={{
+                            srcUrl: post.data.featuredImage.srcUrl,
+                            altText: post.data.featuredImage.altText
+                        }}
+                        url={`/reflexion/${post.slug}`}
+                        date={post.data.date}
+                    />
+                ))
+            }
+        </div>
+    </div>
+</section>

@@ -1,6 +1,15 @@
 ---
 import { Image } from "astro:assets";
 const { item } = Astro.props;
+const WORDS_LENGTH = 160;
+const excert =
+    item.summary.shortContent?.length > WORDS_LENGTH
+        ? item.summary.shortContent.slice(0, WORDS_LENGTH) + "..."
+        : item.summary.shortContent;
+const contentShorted =
+    item.content?.length > WORDS_LENGTH
+        ? item.content.slice(0, WORDS_LENGTH) + "..."
+        : item.content;
 ---
 
 <a href=`/post/${item.slug}` class="grid grid-rows-subgrid group h-full">
@@ -20,12 +29,12 @@ const { item } = Astro.props;
         }
         <h3
             class="text-xl font-semibold mb-2 group-hover:text-accent"
-            transition:name={`title-${item.slug}`}
-            set:html={item.title}
-        />
-        <p class="text-muted-foreground flex-grow">
-            {item.summary.shortContent}
-        </p>
+            transition:name={`title-${item.slug}`}>
+            {item.title}
+        </h3>
+        <div class="text-muted-foreground flex-grow">
+            <p set:html={excert ?? contentShorted} />
+        </div>
         <button class="btn btn-blue">Leer más <span>&rarr;</span></button>
     </article>
 </a>

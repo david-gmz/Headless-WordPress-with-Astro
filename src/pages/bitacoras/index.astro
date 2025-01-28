@@ -2,9 +2,9 @@
 import { getAllItems } from "@lib/getAllItems";
 import Layout from "@layouts/Layout.astro";
 import type { WpCPTBitacoras } from "@lib/types";
-import BitacoraCard from "@components/BitacoraCard.astro";
+import Card from "@components/Card.astro";
 
-const bitacoras: WpCPTBitacoras[] = await getAllItems("bitacoras");
+const bitacoras: WpCPTBitacoras[] = await getAllItems("bitacorasDeViaje");
 ---
 
 <Layout title="Bitacoras" description="All bitacoras you can buy">
@@ -15,13 +15,13 @@ const bitacoras: WpCPTBitacoras[] = await getAllItems("bitacoras");
     <div class="flex flex-wrap pt-5 -mx-2.5">
         {
             bitacoras.map(bitacora => (
-                <BitacoraCard property={bitacora} server:defer>
+                <Card property={bitacora} server:defer>
                     <span
                         slot="fallback"
-                        class="bg-slate-200 dark:bg-slate-800 text-3xl opacity-70">
+                        class="bg-slate-200 dark:bg-slate-800 text-3xl opacity-70 motion-preset-spin">
                         Cargando...
                     </span>
-                </BitacoraCard>
+                </Card>
             ))
         }
     </div>

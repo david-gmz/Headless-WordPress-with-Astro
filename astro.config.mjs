@@ -5,10 +5,10 @@ export default defineConfig({
     // ...
     integrations: [tailwind()],
     output: "server",
-    image: {
-        domains: ["astro.build", "http://viajoenbici.local/"],
-        remotePatterns: [{ protocol: "http" }]
-    },
+    // image: {
+    //     domains: ["astro.build", "http://viajoenbici.local/"],
+    //     remotePatterns: [{ protocol: "http" }]
+    // },
     env: {
         schema: {
             API_BASE_URL: envField.string({

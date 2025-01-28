@@ -3,6 +3,7 @@ import Layout from "@layouts/Layout.astro";
 import RecentItems from "@components/RecentItems.astro";
 import Hero from "@components/Hero.astro";
 import Categories from "@components/Categories.astro";
+import RecentReflexions from "@components/RecentReflexions.astro";
 ---
 
 <Layout
@@ -20,6 +21,7 @@ import Categories from "@components/Categories.astro";
             >Cargando...</span
         >
     </RecentItems>
+    <RecentReflexions />
     <RecentItems title="Tutoriales Recientes" items="tutoriales" server:defer>
         <span
             slot="fallback"

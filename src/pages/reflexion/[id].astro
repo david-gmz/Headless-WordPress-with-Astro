@@ -1,0 +1,44 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+export async function getStaticPaths() {
+    const reflexiones = await getCollection("reflexiones");
+
+    return reflexiones.map(reflexion => ({
+        params: { id: reflexion.slug },
+        props: { reflexion }
+    }));
+}
+
+const { reflexion } = Astro.props;
+const { data, slug } = reflexion;
+const { title, author, date, featuredImage, tags } = data;
+
+const { Content } = await render(reflexion);
+
+export const prerender = true;
+---
+
+<Layout title={`${title} - Dev Books`}>
+    <div class="flex gap-12">
+        <aside class="flex flex-col items-center gap-4">
+            <a href="/" class="hover:underline opacity-70">← Volver atrás</a>
+            <img
+                class="rounded w-72 h-auto"
+                src={`/${featuredImage.srcUrl}`}
+                alt={featuredImage.altText}
+            />
+        </aside>
+
+        <main class="max-w-3xl">
+            <h1
+                transition:name={`title-${slug}`}
+                class="text-4xl font-bold mb-4">
+                {title}
+            </h1>
+            <div class="prose prose-invert">
+                <Content />
+            </div>
+        </main>
+    </div>
+</Layout>

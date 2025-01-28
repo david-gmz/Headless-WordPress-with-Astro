@@ -2,7 +2,7 @@
 import type { ItemSlugNodes } from "@lib/types";
 import Layout from "@layouts/Layout.astro";
 import { getAllItemSlugs } from "@lib/getAllItemSlugs";
-import PostCard from "@components/PostCard.astro";
+import Card from "@components/Card.astro";
 import { postByTagQuery } from "@lib/postByTagQuery";
 
 export const prerender = true;
@@ -29,6 +29,6 @@ const posts = await postByTagQuery(tag);
         <h1 class="text-center dark:text-slate-200 text-3xl">{tagName}</h1>
     </div>
     <div class="flex flex-wrap pt-5 -mx-2.5">
-        {posts.map((post: string) => <PostCard post={post} />)}
+        {posts.map((post: string) => <Card post={post} />)}
     </div>
 </Layout>
