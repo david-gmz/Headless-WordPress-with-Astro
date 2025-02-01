@@ -19,13 +19,14 @@ const post = {
     author: {
         name: "Juan Pérez",
         bio: "Ciclista y escritor",
-        avatar: "/images/avatar.jpg"
+        avatar: 
+            { src: "/public/juan-perez.jpg", alt: "Juan Pérez" }
     },
     tableOfContents: [
-        { title: "Introducción", id: "introduccion" },
-        { title: "El comienzo", id: "comienzo" },
-        { title: "La aventura", id: "aventura" },
-        { title: "Conclusión", id: "conclusion" }
+        { heading: "Introducción", anchor: "introduccion" },
+        { heading: "El comienzo", anchor: "comienzo" },
+        { heading: "La aventura", anchor: "aventura" },
+        { heading: "Conclusión", anchor: "conclusion" }
     ]
 };
 
@@ -35,7 +36,7 @@ const relatedPosts = [
         excerpt: "Guía completa para mantener tu bicicleta...",
         slug: "/tutoriales/mantenimiento-basico",
         category: "Tutoriales",
-        date: "2024-03-18"
+        date: 2024
     }
     // Add more related posts...
 ];

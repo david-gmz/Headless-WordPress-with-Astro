@@ -1,20 +1,26 @@
 ---
 interface Props {
-  title: string;
-  category: string;
-  date: string;
-  readingTime: string;
+    title: string;
+    date: Date;
+    minutesRead: string;
 }
 
-const { title, category, date, readingTime } = Astro.props;
+const { title, date, minutesRead } = Astro.props;
 ---
 
 <header class="relative py-16 bg-muted/50">
-  <div class="container">
-    <div class="max-w-3xl">
-      <p class="text-sm text-muted-foreground mb-3">{category} • {date}</p>
-      <h1 class="text-4xl font-bold mb-4">{title}</h1>
-      <p id="time" class="text-muted-foreground"></p>
+    <div class="container text-center">
+        <div class="max-w-3xl">
+            <h1 class="text-4xl font-bold mb-4">{title}</h1>
+            <p class="text-sm text-muted-foreground mb-3">
+                {
+                    date.toLocaleDateString("es-mx", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric"
+                    })
+                } • Tiempo de lectura: {minutesRead}
+            </p>
+        </div>
     </div>
-  </div>
 </header>

@@ -1,7 +1,12 @@
 ---
 title: 'Opciones de pasar de Panamá a Colombia'
 date: 2017-12-05
-author: 'David Gómez B.'
+author:
+    name: 'David Gómez B.'
+    bio: 'Bambcleto nomade digital'
+    avatar:
+        src: '/images/avatar.webp'
+        alt: 'Ciloviajero en las montañas'
 featuredImage: 
     altText: "Viajero en velero y su bicicleta de bambu a un lado en la cubierta del velero"
     srcUrl: "/images/ideologies.webp"

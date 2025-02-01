@@ -1,14 +1,13 @@
 ---
-
+const {title, description} = Astro.props;
 ---
 
 <section class="py-20 text-center">
-    <div class="container mx-auto px-4">
-        <h1 class="text-5xl font-bold mb-6">Bienvenido a Bambucleta nomade</h1>
+    <div class="container mx-auto px-4 bg-im">
+        <h1 class="text-5xl font-bold mb-6">{title}</h1>
         <p
             class="text-xl text-muted-foreground max-w-2xl mx-auto motion-preset-typewriter-[61] motion-duration-[30s]">
-            Explorando el mundo sobre dos ruedas, compartiendo historias,
-            tutoriales y reflexiones del camino.
+            {description}
         </p>
     </div>
 </section>

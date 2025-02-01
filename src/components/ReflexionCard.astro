@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 interface Props {
     title: string;
-    excerpt: string;
+    excerpt?: string;
     featuredImage: { srcUrl: string; altText: string };
     url: string;
     date: Date;

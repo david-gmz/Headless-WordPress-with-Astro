@@ -1,6 +1,10 @@
 ---
-import { getCollection, render } from "astro:content";
 import Layout from "@layouts/Layout.astro";
+import SingleHeader from "@components/single/SingleHeader.astro";
+import SingleContent from "@components/single/SingleContent.astro";
+import SingleSidebar from "@components/single/SingleSidebar.astro";
+import RelatedPost from "@components/single/RelatedPost.astro";
+import { getCollection, render } from "astro:content";
 export async function getStaticPaths() {
     const reflexiones = await getCollection("reflexiones");
 
@@ -11,34 +15,50 @@ export async function getStaticPaths() {
 }
 
 const { reflexion } = Astro.props;
-const { data, slug } = reflexion;
-const { title, author, date, featuredImage, tags } = data;
+const { data } = reflexion;
+const { title, author, date, featuredImage, tableOfContent, tags } = data;
 
-const { Content } = await render(reflexion);
+const { Content, remarkPluginFrontmatter } = await render(reflexion);
 
 export const prerender = true;
 ---
 
-<Layout title={`${title} - Dev Books`}>
-    <div class="flex gap-12">
-        <aside class="flex flex-col items-center gap-4">
-            <a href="/" class="hover:underline opacity-70">← Volver atrás</a>
-            <img
-                class="rounded w-72 h-auto"
-                src={`/${featuredImage.srcUrl}`}
-                alt={featuredImage.altText}
-            />
-        </aside>
-
-        <main class="max-w-3xl">
-            <h1
-                transition:name={`title-${slug}`}
-                class="text-4xl font-bold mb-4">
-                {title}
-            </h1>
-            <div class="prose prose-invert">
-                <Content />
+<Layout title={`${title} - Bambucleta nomade`}>
+    <SingleHeader
+        title={title}
+        date={date}
+        minutesRead={remarkPluginFrontmatter.minutesRead}
+    />
+    <main class="container lg:py-12">
+        <div
+            class="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 lg:justify-items-center">
+            <div class="prose dark:prose-invert max-w-2xl max-lg:order-2">
+                {
+                    featuredImage && (
+                        <img
+                            src={featuredImage.srcUrl}
+                            alt={featuredImage.altText}
+                            class="w-full h-[400px] object-cover rounded-lg mb-8"
+                            width={600}
+                            height={400}
+                        />
+                    )
+                }
+                <article
+                    id="article"
+                    class="prose dark:prose-invert max-w-none">
+                    <Content />
+                </article>
             </div>
-        </main>
-    </div>
+
+            <aside class="lg:sticky lg:top-20 lg:self-start max-lg:order-1 max-lg:max-w-80">
+                <SingleSidebar
+                    author={author}
+                    tableOfContent={tableOfContent ?? []}
+                    category={tags}
+                    countryData={null}
+                />
+            </aside>
+        </div>
+    </main>
 </Layout>

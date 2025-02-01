@@ -1,18 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
-import { getAllItemSlugs } from "@lib/getAllItemSlugs";
-import { getSingleItemBySlug } from "@lib/getSingleItemBySlug";
-
-export async function getStaticPaths() {
-    const posts = await getAllItemSlugs("tags");
-    const paths = posts.map((post: string) => ({ params: post }));
-
-    return paths;
-}
 const { slug } = Astro.params;
 
-const singlePost = await getSingleItemBySlug(slug, "bitacora");
 ---
 
 <Layout>
